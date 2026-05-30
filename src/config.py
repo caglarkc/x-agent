@@ -39,6 +39,12 @@ class GeminiSettings(BaseModel):
     retry_backoff_seconds: float = Field(default=2.0, ge=0.0)
 
 
+class AccountSettings(BaseModel):
+    """Account identity used for self-observation."""
+
+    x_username: str = ""
+
+
 class SafetySettings(BaseModel):
     """Non-bypassable publishing safety limits."""
 
@@ -80,6 +86,14 @@ class PostingSettings(BaseModel):
     test_post_text: str = Field(default="hello world", min_length=1, max_length=280)
 
 
+class ObservationSettings(BaseModel):
+    """Limits for browser observation sessions."""
+
+    self_tweet_limit: int = Field(default=10, ge=1, le=50)
+    niche_tweet_limit: int = Field(default=20, ge=1, le=100)
+    trend_limit: int = Field(default=20, ge=1, le=100)
+
+
 class Settings(BaseModel):
     """Top-level application settings."""
 
@@ -88,10 +102,12 @@ class Settings(BaseModel):
     chrome_profile_dir: str = "chrome_profile"
     logs_dir: str = "logs"
     kill_switch_file: str = "data/KILL_SWITCH"
+    account: AccountSettings = Field(default_factory=AccountSettings)
     models: ModelSettings = Field(default_factory=ModelSettings)
     gemini: GeminiSettings = Field(default_factory=GeminiSettings)
     safety: SafetySettings = Field(default_factory=SafetySettings)
     browser: BrowserSettings = Field(default_factory=BrowserSettings)
+    observation: ObservationSettings = Field(default_factory=ObservationSettings)
     posting: PostingSettings = Field(default_factory=PostingSettings)
 
     @property

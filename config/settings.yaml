@@ -1,4 +1,6 @@
 shadow_mode: true
+account:
+  x_username: ""
 database_path: data/xagent.db
 chrome_profile_dir: chrome_profile
 logs_dir: logs
@@ -28,6 +30,11 @@ browser:
   session_max_seconds: 180
   action_jitter_min_seconds: 0.8
   action_jitter_max_seconds: 2.5
+
+observation:
+  self_tweet_limit: 10
+  niche_tweet_limit: 20
+  trend_limit: 20
 
 posting:
   test_post_text: hello world

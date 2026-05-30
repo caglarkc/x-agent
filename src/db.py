@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from hashlib import sha256
 from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
@@ -206,6 +207,31 @@ class XAgentDB:
                 VALUES (?, ?, ?, ?, ?)
                 """,
                 (x_post_id, draft_id, utc_now(), text, status),
+            )
+            return int(cursor.lastrowid)
+
+    def get_or_create_observed_post(
+        self,
+        *,
+        x_post_id: str | None,
+        text: str,
+        status: str = "observed",
+    ) -> int:
+        """Return an existing observed post id or create one for metric captures."""
+        external_id = x_post_id or f"observed:{sha256(text.encode('utf-8')).hexdigest()[:24]}"
+        with self.connect() as conn:
+            existing = conn.execute(
+                "SELECT id FROM posts WHERE x_post_id = ?",
+                (external_id,),
+            ).fetchone()
+            if existing:
+                return int(existing["id"])
+            cursor = conn.execute(
+                """
+                INSERT INTO posts (x_post_id, draft_id, published_at, text, status)
+                VALUES (?, NULL, ?, ?, ?)
+                """,
+                (external_id, utc_now(), text, status),
             )
             return int(cursor.lastrowid)
 
