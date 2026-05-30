@@ -1,0 +1,33 @@
+shadow_mode: true
+database_path: data/xagent.db
+chrome_profile_dir: chrome_profile
+logs_dir: logs
+kill_switch_file: data/KILL_SWITCH
+
+models:
+  flash: gemini-2.5-flash
+  pro: gemini-2.5-pro
+  vision: gemini-2.5-flash
+
+gemini:
+  rpm_limit: 10
+  rpd_limit: 250
+  timeout_seconds: 60
+  max_retries: 3
+  retry_backoff_seconds: 2.0
+
+safety:
+  daily_post_cap: 3
+  min_post_interval_minutes: 180
+  oracle_confidence_threshold: 0.65
+  oracle_score_threshold: 0.55
+
+browser:
+  headless: false
+  session_min_seconds: 30
+  session_max_seconds: 180
+  action_jitter_min_seconds: 0.8
+  action_jitter_max_seconds: 2.5
+
+posting:
+  test_post_text: hello world

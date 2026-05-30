@@ -1,0 +1,1 @@
+"""Browser perception adapters."""

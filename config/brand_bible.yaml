@@ -1,0 +1,17 @@
+niche: "AI, automation, and practical software engineering"
+voice:
+  tone: "clear, pragmatic, technically rigorous"
+  language: "tr"
+themes:
+  - "AI agents"
+  - "automation workflows"
+  - "engineering lessons"
+no_go_topics:
+  - "harassment"
+  - "hate speech"
+  - "medical or financial advice"
+goals:
+  primary: "authority"
+  secondary:
+    - "engagement"
+    - "follower growth"
